@@ -1,0 +1,66 @@
+<script>
+var userResponse, userResponseSplit, userChoiceName, winner, message, meters;
+meters = 200;
+
+alert("The race course has been built. Obstacles and aid stations are prepared. Click ok to enter your contestants for Warrior Dash Animal Edition!");
+
+userResponse = prompt("Who do you think will win; Happy the dog, Jack the rabbit or Myrtle the turtle?");
+userResponseSplit = userResponse.split(' ');
+userChoiceName = userResponseSplit[0];
+
+function Animal(name, speed, focus) {
+	this.name = name;
+	this.speed = speed;
+	this.focus = focus;
+	this.position = 0;
+	this.isFocused = function() {
+		return Math.floor(Math.random()*10) < this.focus;
+	}
+	this.advance = function() {
+		if (this.isFocused()) {
+			this.position += this.speed;
+		}
+	}
+	this.progressReport = function() {
+		return this.name + " is at " + this.position;
+	}
+	this.findWinner = function(winnerName){
+	if(userChoiceName == winnerName){
+		message = winnerName + " is the winner! Congrats you were correct!";
+	}
+	else {
+		message = winnerName + " is the winner! Sorry you lose.";
+	}
+	alert(message);
+	}
+}
+
+var dog = new Animal("Happy", 4, 5);
+var rabbit = new Animal("Jack", 8, 2);
+var turtle = new Animal("Myrtle", 1, 9);
+
+while(rabbit.position < meters && turtle.position < meters && dog.position < meters) {
+		turtle.advance();
+		rabbit.advance();
+		dog.advance();
+}
+alert(rabbit.progressReport());
+alert(turtle.progressReport());
+alert(dog.progressReport());
+
+if (rabbit.position > meters){
+	winner = rabbit.name;
+	alert(winner);
+	rabbit.findWinner(winner);
+}
+else if (dog.position > meters){
+	winner = dog.name;
+	alert(winner);
+	dog.findWinner(winner);
+}
+else {
+	winner = turtle.name;
+	alert(winner);
+	turtle.findWinner(winner);
+}
+</script>
